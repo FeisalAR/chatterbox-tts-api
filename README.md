@@ -18,6 +18,26 @@
 </p>
 
 **FastAPI**-powered REST API for [Chatterbox TTS](https://github.com/resemble-ai/chatterbox), providing OpenAI-compatible text-to-speech endpoints with voice cloning capabilities and additional features on top of the `chatterbox-tts` base package.
+## Additions:
+📜**Text File Parser Page** - Ability to import and parse a text file and assign different voice for each speakers. Use [s1], [s2], [s(number)] for assigning speakers. Currently only uploaded voice samples from the library can be used. Each lines will be concatenated into a single output
+
+Example:
+```
+[s1] Guten Morgen! Hast du gut geschlafen?  
+[s2] Ja, ganz wunderbar! Ich habe von frischer Bergluft geträumt.
+[s1] Oh, das klingt herrlich!
+```
+After importing the text file, you can assign the voice for each speaker using dropdowns
+
+➕**Batch/Multi Input Box Page** - Add multiple input boxes with their own voice selection and concatenate the results into a single output. Basically the manual version of the Parser page
+
+⚙️**Alternative Default Language** - Set alternative default language (if using multilungal) to other language in the .env 
+Usage: 
+```
+DEFAULT_LANGUAGE=de
+```
+	
+
 
 ## Features
 
