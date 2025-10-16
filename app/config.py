@@ -21,6 +21,7 @@ class Config:
     EXAGGERATION = float(os.getenv('EXAGGERATION', 0.5))
     CFG_WEIGHT = float(os.getenv('CFG_WEIGHT', 0.5))
     TEMPERATURE = float(os.getenv('TEMPERATURE', 0.8))
+    REPETITION_PENALTY = float(os.getenv('REPETITION_PENALTY', 1.0))
     
     # Text processing
     MAX_CHUNK_LENGTH = int(os.getenv('MAX_CHUNK_LENGTH', 280))
@@ -63,6 +64,8 @@ class Config:
             raise ValueError(f"CFG_WEIGHT must be between 0.0 and 1.0, got {cls.CFG_WEIGHT}")
         if not (0.05 <= cls.TEMPERATURE <= 5.0):
             raise ValueError(f"TEMPERATURE must be between 0.05 and 5.0, got {cls.TEMPERATURE}")
+        if not (0.5 <= cls.REPETITION_PENALTY <= 10.0):
+            raise ValueError(f"REPETITION_PENALTY must be between 0.5 and 10.0, got {cls.REPETITION_PENALTY}")
         if cls.MAX_CHUNK_LENGTH <= 0:
             raise ValueError(f"MAX_CHUNK_LENGTH must be positive, got {cls.MAX_CHUNK_LENGTH}")
         if cls.MAX_TOTAL_LENGTH <= 0:

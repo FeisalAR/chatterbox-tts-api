@@ -147,7 +147,8 @@ async def generate_speech_internal(
     language_id: Optional[str] = None,
     exaggeration: Optional[float] = None,
     cfg_weight: Optional[float] = None,
-    temperature: Optional[float] = None
+    temperature: Optional[float] = None,
+    repetition_penalty: Optional[float] = None
 ) -> io.BytesIO:
     """Internal function to generate speech with given parameters"""
     global REQUEST_COUNTER
@@ -252,6 +253,7 @@ async def generate_speech_internal(
                     "exaggeration": exaggeration,
                     "cfg_weight": cfg_weight,
                     "temperature": temperature,
+                    "repetition_penalty": repetition_penalty,
                 }
                 
                 # Add language_id for multilingual models
@@ -500,6 +502,7 @@ async def generate_speech_streaming(
                         exaggeration=exaggeration,
                         cfg_weight=cfg_weight,
                         temperature=temperature,
+                        repetition_penalty=Config.REPETITION_PENALTY,
                         **({'language_id': language_id} if is_multilingual() else {})
                     )
                 )
@@ -707,6 +710,7 @@ async def generate_speech_sse(
                         exaggeration=exaggeration,
                         cfg_weight=cfg_weight,
                         temperature=temperature,
+                        repetition_penalty=Config.REPETITION_PENALTY,
                         **({'language_id': language_id} if is_multilingual() else {})
                     )
                 )
@@ -839,7 +843,8 @@ async def text_to_speech(request: TTSRequest):
             language_id=language_id,
             exaggeration=request.exaggeration,
             cfg_weight=request.cfg_weight,
-            temperature=request.temperature
+            temperature=request.temperature,
+            repetition_penalty=Config.REPETITION_PENALTY
         )
         
         # Create response
@@ -1000,7 +1005,8 @@ async def text_to_speech_with_upload(
                 language_id=language_id,
                 exaggeration=exaggeration,
                 cfg_weight=cfg_weight,
-                temperature=temperature
+                temperature=temperature,
+                repetition_penalty=Config.REPETITION_PENALTY
             )
             
             # Create response
