@@ -71,7 +71,7 @@ def resolve_voice_path_and_language(voice_name: Optional[str]) -> tuple[str, str
     """
     # If no voice specified, use default
     if not voice_name:
-        return Config.VOICE_SAMPLE_PATH, "en"
+        return Config.VOICE_SAMPLE_PATH, Config.DEFAULT_LANGUAGE
     
     # Try to resolve from voice library (handles both names and aliases)
     voice_lib = get_voice_library()
@@ -83,13 +83,13 @@ def resolve_voice_path_and_language(voice_name: Optional[str]) -> tuple[str, str
         openai_voices = {"alloy", "echo", "fable", "onyx", "nova", "shimmer"}
         if voice_name.lower() in openai_voices:
             print(f"🎵 Using default voice for OpenAI voice '{voice_name}' (no alias mapping)")
-            return Config.VOICE_SAMPLE_PATH, "en"
+            return Config.VOICE_SAMPLE_PATH, Config.DEFAULT_LANGUAGE
         
         # Voice not found, fall back to default voice and log a warning
         print(f"⚠️ Warning: Voice '{voice_name}' not found in voice library, using default voice")
-        return Config.VOICE_SAMPLE_PATH, "en"
+        return Config.VOICE_SAMPLE_PATH, Config.DEFAULT_LANGUAGE
     
-    return voice_path, voice_language or "en"
+    return voice_path, voice_language or Config.DEFAULT_LANGUAGE
 
 
 def resolve_voice_path(voice_name: Optional[str]) -> str:
@@ -144,7 +144,7 @@ def validate_audio_file(file: UploadFile) -> None:
 async def generate_speech_internal(
     text: str,
     voice_sample_path: str,
-    language_id: str = "en",
+    language_id: Optional[str] = None,
     exaggeration: Optional[float] = None,
     cfg_weight: Optional[float] = None,
     temperature: Optional[float] = None
@@ -152,6 +152,10 @@ async def generate_speech_internal(
     """Internal function to generate speech with given parameters"""
     global REQUEST_COUNTER
     REQUEST_COUNTER += 1
+    
+    # Use default language if not specified
+    if language_id is None:
+        language_id = Config.DEFAULT_LANGUAGE
     
     # Start TTS request tracking
     voice_source = "uploaded file" if voice_sample_path != Config.VOICE_SAMPLE_PATH else "default"
@@ -247,7 +251,7 @@ async def generate_speech_internal(
                     "audio_prompt_path": voice_sample_path,
                     "exaggeration": exaggeration,
                     "cfg_weight": cfg_weight,
-                    "temperature": temperature
+                    "temperature": temperature,
                 }
                 
                 # Add language_id for multilingual models
@@ -360,7 +364,7 @@ async def generate_speech_internal(
 async def generate_speech_streaming(
     text: str,
     voice_sample_path: str,
-    language_id: str = "en",
+    language_id: Optional[str] = None,
     exaggeration: Optional[float] = None,
     cfg_weight: Optional[float] = None,
     temperature: Optional[float] = None,
@@ -371,6 +375,10 @@ async def generate_speech_streaming(
     """Streaming function to generate speech with real-time chunk yielding"""
     global REQUEST_COUNTER
     REQUEST_COUNTER += 1
+    
+    # Use default language if not specified
+    if language_id is None:
+        language_id = Config.DEFAULT_LANGUAGE
     
     # Start TTS request tracking
     voice_source = "uploaded file" if voice_sample_path != Config.VOICE_SAMPLE_PATH else "default"
@@ -558,7 +566,7 @@ async def generate_speech_streaming(
 async def generate_speech_sse(
     text: str,
     voice_sample_path: str,
-    language_id: str = "en",
+    language_id: Optional[str] = None,
     exaggeration: Optional[float] = None,
     cfg_weight: Optional[float] = None,
     temperature: Optional[float] = None,
@@ -569,6 +577,10 @@ async def generate_speech_sse(
     """Generate Server-Side Events for speech streaming (OpenAI compatible format)"""
     global REQUEST_COUNTER
     REQUEST_COUNTER += 1
+    
+    # Use default language if not specified
+    if language_id is None:
+        language_id = Config.DEFAULT_LANGUAGE
     
     # Start TTS request tracking
     voice_source = "uploaded file" if voice_sample_path != Config.VOICE_SAMPLE_PATH else "default"
@@ -900,7 +912,7 @@ async def text_to_speech_with_upload(
     # Handle voice selection and file upload
     temp_voice_path = None
     voice_sample_path = Config.VOICE_SAMPLE_PATH  # Default
-    language_id = "en"  # Default language
+    language_id = Config.DEFAULT_LANGUAGE  # Default language
     
     # First, try to resolve voice name from library if no file uploaded
     if not voice_file:
@@ -1102,7 +1114,7 @@ async def stream_text_to_speech_with_upload(
     # Handle voice selection and file upload
     temp_voice_path = None
     voice_sample_path = Config.VOICE_SAMPLE_PATH  # Default
-    language_id = "en"  # Default language
+    language_id = Config.DEFAULT_LANGUAGE  # Default language
     
     # First, try to resolve voice name from library if no file uploaded
     if not voice_file:

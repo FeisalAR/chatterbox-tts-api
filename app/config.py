@@ -44,6 +44,7 @@ class Config:
 
     # Multilingual model settings
     USE_MULTILINGUAL_MODEL = os.getenv('USE_MULTILINGUAL_MODEL', 'true').lower() == 'true'
+    DEFAULT_LANGUAGE = os.getenv('DEFAULT_LANGUAGE', 'en')
     
     # Memory management settings
     MEMORY_CLEANUP_INTERVAL = int(os.getenv('MEMORY_CLEANUP_INTERVAL', 5))
