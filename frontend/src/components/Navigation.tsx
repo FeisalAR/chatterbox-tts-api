@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
-import { Volume2, MemoryStick } from 'lucide-react';
+import { Volume2, MemoryStick, Layers, FileText } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export default function Navigation() {
@@ -12,6 +12,18 @@ export default function Navigation() {
       label: 'TTS',
       icon: Volume2,
       description: 'Text-to-Speech Generation'
+    },
+    {
+      path: '/batch',
+      label: 'Batch',
+      icon: Layers,
+      description: 'Batch TTS Generation'
+    },
+    {
+      path: '/batch-parser',
+      label: 'Parser',
+      icon: FileText,
+      description: 'Batch TTS with File Parsing'
     },
     {
       path: '/memory-management',

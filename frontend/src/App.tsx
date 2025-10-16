@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import ThemeToggle from './components/theme-toggle';
 import Navigation from './components/Navigation';
 import TTSPage from './pages/TTSPage';
+import BatchTTSPage from './pages/BatchTTSPage';
+import BatchTTSParserPage from './pages/BatchTTSParserPage';
 import MemoryPage from './pages/MemoryPage';
 import { createTTSService } from './services/tts';
 import { useApiEndpoint } from './hooks/useApiEndpoint';
@@ -45,6 +47,8 @@ function App() {
       <main className="flex-1 max-w-6xl mx-auto w-full">
         <Switch>
           <Route path="/" component={TTSPage} />
+          <Route path="/batch" component={BatchTTSPage} />
+          <Route path="/batch-parser" component={BatchTTSParserPage} />
           <Route path="/memory-management" component={MemoryPage} />
           <Route>
             {/* 404 Route */}
