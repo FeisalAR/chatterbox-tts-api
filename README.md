@@ -1,3 +1,32 @@
+## Additions:
+📜 **Text File Parser Page** - Ability to import and parse a text file and assign different voice for each speakers. Use [s1], [s2], [s(number)] for assigning speakers. Currently only uploaded voice samples from the library can be used. Each lines will be concatenated into a single output
+
+<img width="50%" alt="image" src="https://github.com/user-attachments/assets/6e0c2e46-9a2a-46b5-8954-ca1d04af6262" />
+
+Example:
+```
+[s1] Guten Morgen! Hast du gut geschlafen?  
+[s2] Ja, ganz wunderbar! Ich habe von frischer Bergluft geträumt.
+[s1] Oh, das klingt herrlich!
+```
+
+After importing the text file, you can assign the voice for each speaker using dropdowns and re-edit the lines if needed.
+
+➕ **Batch/Multi Input Box Page** - Add multiple input boxes with their own voice selection and concatenate the results into a single output. Basically the manual version of the Parser page
+
+<img width="50%" alt="image" src="https://github.com/user-attachments/assets/d1d76060-7808-4e30-9de2-c5cf996496cc" />
+
+⚙️ **Alternative Default Language** - Overrides the default English fallback. Set alternative default language (if using multilungal) to other language in the .env . For some reason the auto detection didn't work on my machine and had to set it this way.
+Usage: 
+```
+DEFAULT_LANGUAGE=de
+```
+
+🔃 **Adjustable Repetition Penalty** - For some resason using the internal preset value often skips input text randomly after some sentence. Using value 10 seems to make it read the entire text, at the cost of occassional wacky schizo ramblings/hissing. Set it in the .env file.
+```
+REPETITION_PENALTY=10
+```
+
 <p align="center">
   <img src="https://lm17s1uz51.ufs.sh/f/EsgO8cDHBTOU5bjcd6giJaPhnlpTZysr24u6k9WGqwIjNgQo" alt="Chatterbox API TTS header">
 </p>
@@ -18,26 +47,6 @@
 </p>
 
 **FastAPI**-powered REST API for [Chatterbox TTS](https://github.com/resemble-ai/chatterbox), providing OpenAI-compatible text-to-speech endpoints with voice cloning capabilities and additional features on top of the `chatterbox-tts` base package.
-## Additions:
-📜**Text File Parser Page** - Ability to import and parse a text file and assign different voice for each speakers. Use [s1], [s2], [s(number)] for assigning speakers. Currently only uploaded voice samples from the library can be used. Each lines will be concatenated into a single output
-
-Example:
-```
-[s1] Guten Morgen! Hast du gut geschlafen?  
-[s2] Ja, ganz wunderbar! Ich habe von frischer Bergluft geträumt.
-[s1] Oh, das klingt herrlich!
-```
-After importing the text file, you can assign the voice for each speaker using dropdowns
-
-➕**Batch/Multi Input Box Page** - Add multiple input boxes with their own voice selection and concatenate the results into a single output. Basically the manual version of the Parser page
-
-⚙️**Alternative Default Language** - Set alternative default language (if using multilungal) to other language in the .env 
-Usage: 
-```
-DEFAULT_LANGUAGE=de
-```
-	
-
 
 ## Features
 
